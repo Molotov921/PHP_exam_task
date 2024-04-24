@@ -1,5 +1,17 @@
 <?php
-require_once "db.php";
+require_once "config.php";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST["record_id"]) && isset($_POST["amount"]) && isset($_POST["payment_time"])) {
+        $record_id = $_POST["record_id"];
+        $amount = $_POST["amount"];
+        $payment_time = $_POST["payment_time"];
+        
+        createPayment($record_id, $amount, $payment_time);
+    } else {
+        echo "Incomplete data provided";
+    }
+}
 
 function createPayment($record_id, $amount, $payment_time) {
     global $conn;

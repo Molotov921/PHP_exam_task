@@ -1,10 +1,24 @@
 <?php
-require_once "db.php";
+require_once "config.php";
 
-function addParkingLot($name, $capacity, $location, $status) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $lot_id = $_POST['lot_id'];
+    $name = $_POST['name'];
+    $floor = $_POST['floor'];
+    $number = $_POST['number'];
+    $status = $_POST['status'];
+
+    if (addParkingLot($lot_id, $floor, $number, $status)) {
+        echo json_encode(array("message" => "Parking space added successfully"));
+    } else {
+        echo json_encode(array("message" => "Failed to add parking space"));
+    }
+}
+
+function addParkingLot($lot_id, $name, $capacity, $location, $status) {
     global $conn;
 
-    $sql = "INSERT INTO parking_lots (name, capacity, location, status, created_at) VALUES ('$name', '$capacity', '$location', '$status', NOW())";
+    $sql = "INSERT INTO parking_lots (name, capacity, location, status, created_at) VALUES ('$lot_id', '$name', '$capacity', '$location', '$status', NOW())";
 
     if ($conn->query($sql) === TRUE) {
         return true;

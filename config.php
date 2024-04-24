@@ -13,10 +13,12 @@ echo "Connection successfull";
 
 function executeQuery($sql) {
     global $conn;
-    if ($conn->query($sql) === TRUE) {
-        return true;
+    $result = $conn->query($sql);
+    if ($result === TRUE) {
+        return array("success" => true, "message" => "Query executed successfully");
     } else {
-        return false;
+        return array("success" => false, "message" => "Error executing query: " . $conn->error);
     }
 }
+
 ?>

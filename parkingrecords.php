@@ -1,5 +1,18 @@
 <?php
-require_once "db.php";
+require_once "config.php";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST["vehicle_id"]) && isset($_POST["space_id"]) && isset($_POST["entry_time"]) && isset($_POST["status"])) {
+        $vehicle_id = $_POST["vehicle_id"];
+        $space_id = $_POST["space_id"];
+        $entry_time = $_POST["entry_time"];
+        $status = $_POST["status"];
+        
+        addParkingRecord($vehicle_id, $space_id, $entry_time, $status);
+    } else {
+        echo "Incomplete data provided";
+    }
+}
 
 function addParkingRecord($vehicle_id, $space_id, $entry_time, $status) {
     global $conn;

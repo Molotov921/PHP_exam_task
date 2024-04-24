@@ -1,5 +1,17 @@
 <?php
-require_once "db.php";
+require_once "config.php";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["password"])) {
+        $username = $_POST["username"];
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        
+        createUser($username, $email, $password);
+    } else {
+        echo "Incomplete data provided";
+    }
+}
 
 function createUser($username, $email, $password) {
     global $conn;
